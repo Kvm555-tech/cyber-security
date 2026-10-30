@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientException;
 
 import java.util.List;
 import java.util.Map;
@@ -57,9 +57,9 @@ public class ScanController {
             JsonNode body = mapper.readTree(error.getResponseBodyAsString());
             return ResponseEntity.badRequest().body(Map.of("error", body.path("error").asText()));
 
-        } catch (ResourceAccessException error) {
+        } catch (RestClientException error) {
             return ResponseEntity.status(503).body(Map.of(
-                    "error", "The ML service is not running. Start it and try again."));
+                    "error", "The ML service is not available. Wait a minute and try again."));
         }
 
         ScanRecord saved = repository.save(new ScanRecord(
