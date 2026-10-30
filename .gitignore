@@ -1,0 +1,18 @@
+# Local passwords
+backend/local.properties
+backend/.db-superuser.local
+*.local
+
+# Installed packages and build output
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+backend/target/
+frontend/dist/
+
+# Local tools
+.agents/
+.claude/
+skills-lock.json

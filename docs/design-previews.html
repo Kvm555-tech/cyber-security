@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CyberShield AI design options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Atkinson+Hyperlegible:wght@400;700&family=Mukta:wght@400;600&family=Rozha+One&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{background:#fff;color:#1c1c1c;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid currentColor;outline-offset:3px}
+
+/* Picker chrome: deliberately plain so the options do the talking */
+.picker{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;padding:12px clamp(16px,4vw,48px);background:#fff;border-bottom:1px solid #ddd}
+.picker strong{font-size:15px}
+.picker a{font-size:15px;text-underline-offset:3px}
+.option-head{padding:40px clamp(16px,4vw,48px) 24px;max-width:1100px}
+.option-head h2{font-size:clamp(22px,3vw,28px);line-height:1.2}
+.option-head p{margin-top:6px;max-width:68ch}
+.swatches{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:16px;list-style:none}
+.swatches li{display:flex;align-items:center;gap:8px;font-size:14px}
+.swatches i{width:30px;height:30px;border-radius:6px;border:1px solid #0003;flex:none}
+
+/* A: Eye test */
+.a{--red:#E8503F;--green:#35B86B;--ink:#000;--paper:#fff;color:var(--ink);font-family:"Atkinson Hyperlegible",sans-serif}
+.a ::selection{background:var(--ink);color:var(--green)}
+.a-title{background:linear-gradient(90deg,var(--red) 50%,var(--green) 50%);text-align:center;padding:24px 16px 32px}
+.a-brand{font-weight:700;font-size:19px}
+.a-title h3{font-size:clamp(2.6rem,7.4vw,6rem);line-height:1.02;letter-spacing:-.025em;margin-top:clamp(24px,5vw,56px);text-wrap:balance}
+.a-title p{font-size:clamp(1.05rem,1.6vw,1.3rem);max-width:56ch;margin:20px auto 0;text-wrap:balance}
+.a-btn{display:inline-block;margin-top:24px;padding:14px 26px;background:var(--ink);color:var(--paper);font-weight:700;text-decoration:none;border-radius:4px}
+.a-btn:hover{background:#2b2b2b}
+.a-chart{display:grid;grid-template-columns:1fr 1fr}
+.a-col{padding:12px clamp(16px,3vw,40px) 40px;text-align:center;font-weight:700;min-width:0;overflow-wrap:anywhere}
+.a-col.r{background:var(--red)}.a-col.g{background:var(--green)}
+.a-col h4{font-size:1rem;font-weight:400;margin-bottom:14px}
+.a-col span{display:block;line-height:1.3;margin-top:.35em}
+.l1{font-size:clamp(1.25rem,3vw,2.7rem)}.l2{font-size:clamp(1.05rem,2.2vw,1.95rem)}.l3{font-size:clamp(.95rem,1.6vw,1.4rem)}.l4{font-size:clamp(.85rem,1.1vw,1rem)}
+.a-steps{background:var(--paper);padding:clamp(40px,6vw,72px) clamp(16px,4vw,48px)}
+.steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,4vw,56px);max-width:1100px;margin:0 auto}
+.a-steps h4{font-size:clamp(1.5rem,2.6vw,2.2rem);line-height:1.1;letter-spacing:-.02em}
+.a-steps li b{display:block;font-size:clamp(3rem,6vw,5rem);line-height:1}
+.steps p{margin-top:8px;max-width:38ch}
+
+/* B: Security print */
+.b{--aub:#2E0F3E;--paper:#F8E4ED;--rose:#C4346F;color:var(--aub);font-family:Mukta,sans-serif}
+.b ::selection{background:var(--aub);color:var(--paper)}
+.b-hero{background:var(--aub);padding:clamp(16px,4vw,56px)}
+.cheque{position:relative;overflow:hidden;background:var(--paper);display:grid;grid-template-columns:minmax(200px,26%) 1fr;max-width:1180px;margin:0 auto;border-radius:6px}
+.cheque svg{position:absolute;right:-12%;top:50%;width:min(760px,120%);transform:translateY(-50%);pointer-events:none}
+.b-stub{position:relative;padding:clamp(20px,3vw,36px);border-right:2px dashed var(--aub)}
+.b-stub h4{font-size:17px;font-weight:600}
+.b-stub ul{list-style:none;margin-top:10px}
+.b-stub li{padding:10px 0;border-top:1px solid #2e0f3e44;font-size:15.5px;line-height:1.35}
+.b-main{position:relative;padding:clamp(20px,4vw,48px)}
+.b-brand{font-family:"Rozha One",serif;font-size:22px}
+.b-main h3{font-family:"Rozha One",serif;font-weight:400;font-size:clamp(2.3rem,5.4vw,4.6rem);line-height:1.04;margin-top:clamp(20px,3vw,36px);max-width:15ch}
+.b-main>p{font-size:clamp(1.05rem,1.5vw,1.25rem);max-width:50ch;margin-top:16px}
+.field{display:flex;flex-wrap:wrap;gap:0 12px;align-items:baseline;margin-top:24px;padding-bottom:4px;border-bottom:2px dotted var(--aub);max-width:620px}
+.field small{font-size:15px}
+.field code{font-family:Mukta,sans-serif;font-weight:600;font-size:clamp(1.05rem,2vw,1.4rem);overflow-wrap:anywhere;min-width:0}
+.b-act{display:flex;flex-wrap:wrap;align-items:center;gap:20px 32px;margin-top:24px}
+.b-btn{display:inline-block;padding:12px 24px;background:var(--aub);color:var(--paper);font-weight:600;text-decoration:none;border-radius:4px}
+.b-btn:hover{background:var(--rose)}
+.stamp{display:inline-block;transform:rotate(-5deg);border:3px solid var(--rose);color:#A31F55;padding:4px 14px;font-family:"Rozha One",serif;font-size:1.3rem;border-radius:4px}
+.b-steps{background:var(--paper);padding:clamp(40px,6vw,72px) clamp(16px,4vw,48px)}
+.b-steps h4{font-family:"Rozha One",serif;font-weight:400;font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.15}
+.b-steps li{border-top:3px double var(--aub);padding-top:12px}
+.b-steps b{color:#A31F55;font-weight:600}
+
+/* C: Waterline */
+.c{--sky:#FFC83D;--water:#0B5E6B;--deep:#073F49;--float:#E8402A;--ink:#10262B;color:var(--ink);font-family:"Work Sans",sans-serif}
+.c ::selection{background:var(--float);color:#fff}
+.c-sky{background:var(--sky);padding:24px clamp(16px,4vw,48px) clamp(28px,4vw,48px)}
+.c-brand{font-family:"Alfa Slab One",serif;font-size:20px}
+.c-sky h3{font-family:"Alfa Slab One",serif;font-weight:400;font-size:clamp(2.5rem,7.6vw,6.2rem);line-height:1.02;margin-top:clamp(20px,3vw,36px)}
+.c-water{--depth:clamp(72px,10vw,120px);background:var(--water);color:#fff;padding:var(--depth) clamp(16px,4vw,48px) clamp(36px,5vw,64px);display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:end}
+.bait{font-family:"Alfa Slab One",serif;font-size:clamp(2.5rem,8.4vw,5.6rem);line-height:1.08;overflow-wrap:normal}
+.bait span{display:block}
+.bait .faint{color:#9ED4DB}
+.hooked{position:relative;display:inline-block!important}
+.hooked::before{content:"";position:absolute;left:62%;top:calc(-1 * var(--depth));width:2px;height:calc(var(--depth) + .32em);background:#fff}
+.hooked .hook{position:absolute;left:calc(62% - .465em + 1px);top:.3em;width:.62em;height:1em;color:var(--float);overflow:visible}
+.hooked .bobber{position:absolute;left:calc(62% - 15px);top:calc(-1 * var(--depth) - 24px);width:32px;height:48px;overflow:visible;animation:dip 1.4s cubic-bezier(.16,1,.3,1) .6s 1 both}
+@keyframes dip{0%{transform:translateY(0)}35%{transform:translateY(14px)}100%{transform:translateY(0)}}
+.c-note p{font-size:clamp(1.05rem,1.5vw,1.25rem);max-width:44ch}
+.c-btn{display:inline-block;margin-top:20px;padding:14px 26px;background:var(--sky);color:var(--ink);font-weight:600;text-decoration:none;border-radius:4px}
+.c-btn:hover{background:#fff}
+.c-steps{background:var(--deep);color:#fff;padding:clamp(40px,6vw,72px) clamp(16px,4vw,48px)}
+.c-steps h4{font-family:"Alfa Slab One",serif;font-weight:400;font-size:clamp(1.4rem,2.2vw,1.9rem);line-height:1.15;color:var(--sky)}
+
+.note{font-size:14px;margin-top:14px}
+footer{padding:32px clamp(16px,4vw,48px);border-top:1px solid #ddd;margin-top:40px}
+
+@media(max-width:760px){
+  .a-title{background:var(--red)}
+  .a-chart{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .cheque{grid-template-columns:1fr}
+  .b-main{order:-1}
+  .b-stub{border-right:0;border-top:2px dashed var(--aub)}
+  .cheque svg{right:-40%;top:30%;opacity:.7}
+  .c-water{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bobber{animation:none}}
+</style>
+</head>
+<body>
+
+<nav class="picker" aria-label="Design options">
+  <strong>CyberShield AI: pick a look</strong>
+  <a href="#a">A Eye test</a>
+  <a href="#b">B Security print</a>
+  <a href="#c">C Waterline</a>
+</nav>
+
+<!-- A -->
+<section id="a">
+  <div class="option-head">
+    <h2>A. Eye test</h2>
+    <p>Spotting a fake link is really a test of how closely you look. This borrows the red and green chart from an eye clinic, which also happens to mean danger and safe.</p>
+    <ul class="swatches">
+      <li><i style="background:#E8503F"></i>Chart red #E8503F</li>
+      <li><i style="background:#35B86B"></i>Chart green #35B86B</li>
+      <li><i style="background:#000"></i>Black #000000</li>
+      <li><i style="background:#fff"></i>White #FFFFFF</li>
+    </ul>
+    <p class="note">Font: Atkinson Hyperlegible, made for people with low vision.</p>
+  </div>
+  <div class="a">
+    <div class="a-title">
+      <div class="a-brand">CyberShield AI</div>
+      <h3>Can you spot the fake link?</h3>
+      <p>CyberShield AI checks a website link and tells you if it looks like phishing, and why.</p>
+      <a class="a-btn" href="#a">See how it works</a>
+    </div>
+    <div class="a-chart">
+      <div class="a-col r">
+        <h4>Looks like phishing</h4>
+        <span class="l1">mybank-login.example</span>
+        <span class="l2">secure.mybank-help.example</span>
+        <span class="l3">mybank.verify-account.example</span>
+        <span class="l4">update.mybank.login-now.example</span>
+      </div>
+      <div class="a-col g">
+        <h4>Looks legitimate</h4>
+        <span class="l1">mybank.example</span>
+        <span class="l2">mybank.example/login</span>
+        <span class="l3">mybank.example/account</span>
+        <span class="l4">mybank.example/help/update</span>
+      </div>
+    </div>
+    <div class="a-steps">
+      <ol class="steps">
+        <li><b>1</b><h4>Paste a link</h4><p>Give CyberShield AI the website link you are unsure about.</p></li>
+        <li><b>2</b><h4>The model reads it</h4><p>A Random Forest model, built from 11,055 public website records, looks for warning signs.</p></li>
+        <li><b>3</b><h4>You get an answer</h4><p>A threat score and the reasons behind it, in plain words.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- B -->
+<section id="b">
+  <div class="option-head">
+    <h2>B. Security print</h2>
+    <p>Bank cheques carry fine linework and printed marks so that forgeries can be caught. Phishing is forgery too, so here the page itself is a cheque being examined.</p>
+    <ul class="swatches">
+      <li><i style="background:#2E0F3E"></i>Aubergine ink #2E0F3E</li>
+      <li><i style="background:#F8E4ED"></i>Cheque paper #F8E4ED</li>
+      <li><i style="background:#C4346F"></i>Security rose #C4346F</li>
+      <li><i style="background:#A31F55"></i>Stamp rose #A31F55</li>
+    </ul>
+    <p class="note">Fonts: Rozha One for headings, Mukta for text. Both come from Indian type designers.</p>
+  </div>
+  <div class="b">
+    <div class="b-hero">
+      <div class="cheque">
+        <svg id="guilloche" viewBox="-300 -300 600 600" aria-hidden="true"></svg>
+        <div class="b-stub">
+          <h4>Why this link was flagged</h4>
+          <ul>
+            <li>Hyphen in the domain name</li>
+            <li>Extra subdomains before the real name</li>
+            <li>No HTTPS</li>
+          </ul>
+        </div>
+        <div class="b-main">
+          <div class="b-brand">CyberShield AI</div>
+          <h3>Forged links leave marks.</h3>
+          <p>CyberShield AI checks a website link and tells you if it looks like phishing, and why.</p>
+          <div class="field"><small>Link</small><code>http://secure.mybank-help.example</code></div>
+          <div class="b-act">
+            <a class="b-btn" href="#b">See how it works</a>
+            <span class="stamp">Looks like phishing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="b-steps">
+      <ol class="steps">
+        <li><b>Step 1</b><h4>Paste a link</h4><p>Give CyberShield AI the website link you are unsure about.</p></li>
+        <li><b>Step 2</b><h4>The model reads it</h4><p>A Random Forest model, built from 11,055 public website records, looks for warning signs.</p></li>
+        <li><b>Step 3</b><h4>You get an answer</h4><p>A threat score and the reasons behind it, in plain words.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- C -->
+<section id="c">
+  <div class="option-head">
+    <h2>C. Waterline</h2>
+    <p>The name says it: phishing is fishing. The sunny surface is what you see, and the link underneath is the bait with a hook in it. This is the warmest and easiest one to explain at a stall.</p>
+    <ul class="swatches">
+      <li><i style="background:#FFC83D"></i>Marigold sky #FFC83D</li>
+      <li><i style="background:#0B5E6B"></i>River teal #0B5E6B</li>
+      <li><i style="background:#073F49"></i>Deep water #073F49</li>
+      <li><i style="background:#E8402A"></i>Float red #E8402A</li>
+    </ul>
+    <p class="note">Fonts: Alfa Slab One for headings, Work Sans for text.</p>
+  </div>
+  <div class="c">
+    <div class="c-sky">
+      <div class="c-brand">CyberShield AI</div>
+      <h3>A phishing link is bait.</h3>
+    </div>
+    <div class="c-water">
+      <div class="bait">
+        <span class="hooked">login.
+          <svg class="bobber" viewBox="0 0 32 48" aria-hidden="true"><rect x="14" y="0" width="4" height="12" fill="#10262B"/><path d="M16 8a12 16 0 0 1 12 16H4A12 16 0 0 1 16 8z" fill="#E8402A"/><path d="M4 24h24a12 16 0 0 1-24 0z" fill="#fff"/></svg>
+          <svg class="hook" viewBox="0 0 20 32" aria-hidden="true"><path d="M10 0v20a6 6 0 0 1-12 0v-5l-3 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(5 0)"/></svg>
+        </span>
+        <span class="faint">mybank-help</span>
+        <span class="faint">.example</span>
+      </div>
+      <div class="c-note">
+        <p>It looks like the real thing until you bite. CyberShield AI checks a website link and tells you if it looks like phishing, and why.</p>
+        <a class="c-btn" href="#c">See how it works</a>
+      </div>
+    </div>
+    <div class="c-steps">
+      <ol class="steps">
+        <li><h4>1. Paste a link</h4><p>Give CyberShield AI the website link you are unsure about.</p></li>
+        <li><h4>2. The model reads it</h4><p>A Random Forest model, built from 11,055 public website records, looks for warning signs.</p></li>
+        <li><h4>3. You get an answer</h4><p>A threat score and the reasons behind it, in plain words.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<footer>All links shown are made-up examples, and the buttons don't go anywhere yet. Nothing here is the final site.</footer>
+
+<script>
+// Draws the fine cheque-style linework for option B
+(function () {
+  var svg = document.getElementById('guilloche'), d = '';
+  for (var k = 0; k < 36; k++) {
+    var phase = k * Math.PI / 18, pts = [];
+    for (var t = 0; t <= Math.PI * 2 + 0.001; t += 0.02) {
+      var r = 180 + 96 * Math.cos(9 * t + phase) * Math.cos(2 * t);
+      pts.push((r * Math.cos(t)).toFixed(1) + ' ' + (r * Math.sin(t)).toFixed(1));
+    }
+    d += 'M' + pts.join('L') + 'Z';
+  }
+  svg.innerHTML = '<path d="' + d + '" fill="none" stroke="#C4346F" stroke-width=".5" opacity=".55"/>';
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "testRecords": 2211,
+  "accuracy": 90.68,
+  "precision": 91.79,
+  "recall": 86.73,
+  "f1": 89.19,
+  "falseAlarms": 6.17
+}

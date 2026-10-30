@@ -1,0 +1,16 @@
+{
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/.venv": true,
+        "**/venv": true,
+        "**/__pycache__": true,
+        "**/target": true,
+        ".agents": true,
+        ".claude": true,
+        "skills-lock.json": true,
+        "backend/local.properties": true,
+        "backend/.db-superuser.local": true,
+        "backend/src/main/resources/static": true
+    }
+}
