@@ -1,0 +1,13 @@
+**/node_modules
+**/.venv
+**/venv
+**/__pycache__
+**/target
+backend/src/main/resources/static
+backend/local.properties
+backend/.db-superuser.local
+.git
+.agents
+.claude
+archive
+website
