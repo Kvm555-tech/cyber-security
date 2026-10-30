@@ -25,6 +25,7 @@ Keep the two other windows open while using it. Close them to stop the project.
 | `models` | Trained models and test results |
 | `dataset` | UCI phishing websites dataset |
 | `website` | Static information page that can be hosted for free |
+| `archive` | Earlier scripts and prototypes, not used by the running project |
 
 ## After changing code
 
@@ -61,5 +62,5 @@ Retrain the live model, from `ml-service`:
 - Full scanner on real links (2026-10-30): flagged 92.3% of 3,000 unseen links from Phishing.Database, 1.4% of the 3,000 most popular Tranco sites, and 98.3% of 3,000 real Tranco sites ranked just outside the list. Phishing hosted on a known website can pass.
 - Run the scanner tests from `ml-service` with `.venv\Scripts\python.exe test_scan.py`, adding a phishing list and a safe list (one link per line) for bulk results.
 - The UCI dataset is from 2015, and the rule weights were set by hand.
-- `train_models.py` and the 30-feature `.pkl` models need pandas and scikit-learn, which Windows Smart App Control blocks on this PC. The live service does not use them.
+- The 30-feature `.pkl` models need scikit-learn, which Windows Smart App Control blocks on this PC. The live service does not use them.
 - Local database passwords are in `backend/local.properties` and `backend/.db-superuser.local`. Do not share these files.
